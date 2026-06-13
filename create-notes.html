@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Study Sphere - Note Creation Workflow</title>
+    <style>
+      /* Background Theme */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Avenir', 'Segoe UI', sans-serif;
+        background: linear-gradient(-45deg, #0a1128, #121e3d, #08152e, #0f2547);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: #ffffff; 
+        line-height: 1.6;
+      }
+
+      @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: flex-start;
+      }
+      .back-btn {
+        color: #00e5ff;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.3s;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 10px 20px;
+        border-radius: 30px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+      }
+      .back-btn:hover {
+        background: rgba(0, 229, 255, 0.1);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+      }
+
+      /* Header Styling */
+      .page-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .page-header h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+      .page-header p {
+        color: rgba(255,255,255,0.7);
+        font-size: 18px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Base Zig-Zag Layout */
+      .step-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 60px;
+        gap: 50px;
+        background: rgba(255, 255, 255, 0.03); 
+        backdrop-filter: blur(16px); 
+        -webkit-backdrop-filter: blur(16px); 
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
+        border-radius: 20px;
+        padding: 40px;
+      }
+      .step-row.reverse {
+        flex-direction: row-reverse;
+      }
+
+      /* Text Column */
+      .step-text {
+        flex: 1.2;
+      }
+      .step-text h2 {
+        color: #ffffff;
+        font-size: 28px;
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .purpose {
+        font-size: 15px;
+        color: rgba(255,255,255,0.8);
+        margin-bottom: 25px;
+        font-style: italic;
+      }
+
+      /* COLORED EMBED BOXES */
+      .embed-box {
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        font-size: 15px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .embed-box h4 {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .embed-box p, .embed-box ul {
+        margin: 0;
+        color: rgba(255,255,255,0.9);
+        padding-left: 15px;
+      }
+      .embed-box li {
+        margin-bottom: 5px;
+      }
+
+      /* Specific Colors */
+      .glass-purple { background: rgba(179, 102, 255, 0.1); border: 1px solid rgba(179, 102, 255, 0.2); border-left: 4px solid #b366ff; }
+      .glass-purple h4 { color: #b366ff; }
+      .glass-green { background: rgba(77, 255, 77, 0.1); border: 1px solid rgba(77, 255, 77, 0.2); border-left: 4px solid #4dff4d; }
+      .glass-green h4 { color: #4dff4d; }
+      .glass-red { background: rgba(255, 77, 77, 0.1); border: 1px solid rgba(255, 77, 77, 0.2); border-left: 4px solid #ff4d4d; }
+      .glass-red h4 { color: #ff4d4d; }
+      .glass-blue { background: rgba(77, 148, 255, 0.1); border: 1px solid rgba(77, 148, 255, 0.2); border-left: 4px solid #4d94ff; }
+      .glass-blue h4 { color: #4d94ff; }
+      .glass-yellow { background: rgba(255, 204, 51, 0.1); border: 1px solid rgba(255, 204, 51, 0.2); border-left: 4px solid #ffcc33; }
+      .glass-yellow h4 { color: #ffcc33; }
+      .glass-orange { background: rgba(255, 136, 51, 0.1); border: 1px solid rgba(255, 136, 51, 0.2); border-left: 4px solid #ff8833; }
+      .glass-orange h4 { color: #ff8833; }
+      .glass-neutral { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 4px solid #ffffff; }
+      .glass-neutral h4 { color: #ffffff; }
+
+      /* ONE-CLICK PROMPT COPY BOX */
+      .prompt-container {
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 20px;
+        position: relative;
+        box-shadow: inset 0 4px 10px rgba(0,0,0,0.5);
+      }
+      .prompt-header {
+        color: #00e5ff;
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .prompt-text {
+        color: #a0aec0;
+        font-family: monospace;
+        font-size: 13px;
+        white-space: pre-wrap;
+        line-height: 1.6;
+        margin-bottom: 45px; 
+        max-height: 250px; 
+        overflow-y: auto; 
+        padding-right: 10px; 
+      }
+      /* Custom Scrollbar for Prompt Box */
+      .prompt-text::-webkit-scrollbar {
+        width: 6px;
+      }
+      .prompt-text::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.05);
+        border-radius: 10px;
+      }
+      .prompt-text::-webkit-scrollbar-thumb {
+        background: rgba(0, 229, 255, 0.3);
+        border-radius: 10px;
+      }
+      .prompt-text::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 229, 255, 0.6);
+      }
+
+      .copy-btn {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        background: linear-gradient(135deg, #00e5ff, #0077b6);
+        color: #ffffff;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
+        z-index: 10;
+      }
+      .copy-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 229, 255, 0.5);
+      }
+      .copy-btn.copied {
+        background: #4dff4d;
+        color: #0a1128;
+        box-shadow: 0 4px 10px rgba(77, 255, 77, 0.4);
+      }
+
+      /* Image Column */
+      .step-image {
+        flex: 0.8;
+        text-align: center;
+      }
+      .step-image img {
+        width: 100%;
+        max-width: 300px; 
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: transform 0.3s;
+      }
+      .step-image img:hover {
+        transform: scale(1.03);
+      }
+
+      /* Workflow Diagram */
+      .workflow-diagram {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 40px;
+        text-align: center;
+        font-family: monospace;
+        color: #00e5ff;
+        font-size: 16px;
+        margin-top: 20px;
+        line-height: 2;
+      }
+      .workflow-diagram span {
+        display: block;
+        color: #ffffff;
+        font-weight: 600;
+        background: rgba(255,255,255,0.05);
+        padding: 10px;
+        border-radius: 8px;
+        margin: 5px auto;
+        max-width: 300px;
+        border: 1px solid rgba(0, 229, 255, 0.2);
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .step-row, .step-row.reverse {
+          flex-direction: column;
+          padding: 30px 20px;
+        }
+        .step-image img {
+          max-width: 250px;
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <div class="nav-bar">
+      <a href="tutorial.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to User Manual</a>
+    </div>
+
+    <div class="page-header">
+      <h1>Note Creation Workflow</h1>
+      <p>A complete, step-by-step guide to generating and formatting Study Sphere notes using AI.</p>
+    </div>
+
+    <div class="step-row">
+      <div class="step-image">
+        <img src="images/doc-manager.png" alt="Doc Manager Pro">
+      </div>
+      <div class="step-text">
+        <h2 style="color: #4d94ff;">1. Doc Manager Pro</h2>
+        <div class="purpose"><strong>Screen Purpose:</strong> The starting point for creating, scanning, and formatting study notes.</div>
+        
+        <div class="embed-box glass-purple">
+          <h4>🟪 Create in Docs</h4>
+          <p>Tap to open Google Docs. You can create, edit, and collaborate on documents directly inside Google Docs.</p>
+        </div>
+
+        <div class="embed-box glass-green">
+          <h4>🟩 Scan Doc</h4>
+          <p>Tap to scan physical notes using your device camera. Scanned pages can be converted into digital documents and stored for future use.</p>
+        </div>
+
+        <div class="embed-box glass-red">
+          <h4>🟥 Create Note</h4>
+          <p>Tap to open the built-in StudySphere Note Editor. Designed for creating formatted study notes that can later be exported as TXT or PDF files.</p>
+        </div>
+
+        <div class="embed-box glass-neutral">
+          <h4>ℹ️ Information Button</h4>
+          <p>Tap the Information (i) button located in the top-right corner to open the User Manual and formatting guide.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row reverse">
+      <div class="step-image">
+        <img src="images/info.png" alt="User Manual & Formatting Guide">
+      </div>
+      <div class="step-text">
+        <h2 style="color: #ff4d4d;">2. User Manual & Guide</h2>
+        <div class="purpose"><strong>Screen Purpose:</strong> Explains how the note creation system works and provides quick access to the formatting prompt.</div>
+        
+        <div class="embed-box glass-neutral">
+          <h4>ℹ️ User Manual Contains:</h4>
+          <ul>
+            <li>Create in Docs instructions</li>
+            <li>Scan Doc instructions</li>
+            <li>Create Note instructions</li>
+            <li>Markdown formatting examples & Export guidance</li>
+          </ul>
+        </div>
+
+        <div class="embed-box glass-red">
+          <h4>🟥 Copy ChatGPT Formatting Prompt</h4>
+          <p>Tap <strong>Copy ChatGPT Prompt</strong> inside the app, or use the quick-copy box below to grab the official StudySphere template. After copying, open ChatGPT and paste the prompt.</p>
+        </div>
+
+        <div class="prompt-container">
+          <div class="prompt-header">
+            <i class="fa-solid fa-terminal"></i> StudySphere Master Prompt
+          </div>
+          <div class="prompt-text" id="studySpherePrompt">Add in memory
+
+&#96;&#96;&#96;You are an expert academic note generator.
+
+Your output will be directly parsed by a custom academic notes application.
+
+If the user asks ANY study-related question or requests notes, you MUST ALWAYS answer using this specified formatting structure.
+
+Always return ONLY the formatted notes.
+
+Never add introductions such as "Here is your answer", "Sure", "Below are the notes", or any conversational or meta text.
+
+CRUCIAL REQUIREMENT: You MUST use the supported embedded blocks (e.g. [[FACT]], [[IMPORTANT]], [[EXAMPLE]], [[FORMULA]], etc.) EXTENSIVELY throughout your answer. Do not just write plain text paragraphs when an embedded block is applicable. The application relies on these blocks for UI rendering, so maximize their usage.
+
+Generate revision-friendly, exam-oriented notes that are visually structured, comprehensive, and easy to memorize.
+
+Organize content logically from basic concepts to advanced concepts.
+
+Expand the answer according to the marks requested:
+• 2 Marks → Very brief
+• 5 Marks → Short note
+• 10 Marks → Detailed note
+• 15 Marks → Comprehensive answer
+• 20 Marks → Full descriptive answer
+• 30+ Marks → Chapter-level notes
+              ------------------------------------------
+
+SUPPORTED MARKDOWN STRUCTURE
+
+# Main Title
+
+=Section Title=
+
+## Heading
+
+### Subheading
+
+Normal paragraph.
+
+- Bullet point
+- Bullet point
+
+1. Numbered point
+2. Numbered point
+
+---
+
+[[TABLE]]
+| Column 1 | Column 2 |
+|----------|----------|
+| Data | Data |
+
+------------------------------------------
+
+SUPPORTED EMBEDDED BLOCKS
+
+[[TITLE]]
+[[SUBTITLE]]
+[[OBJECTIVE]]
+[[INTRODUCTION]]
+[[DEFINITION]]
+[[FACT]]
+[[FACT BOX]]
+[[IMPORTANT]]
+[[VERY IMPORTANT]]
+[[NOTE]]
+[[WARNING]]
+[[TIP]]
+[[EXAM TIP]]
+[[MEMORY TRICK]]
+[[TRICK]]
+[[COMMON MISTAKE]]
+[[FORMULA]]
+[[EQUATION]]
+[[UNIT]]
+[[SYMBOL]]
+[[LAW]]
+[[THEORY]]
+[[THEOREM]]
+[[PRINCIPLE]]
+[[RULE]]
+[[DISCOVERY]]
+[[INVENTION]]
+[[DATE]]
+[[YEAR]]
+[[EVENT]]
+[[PERSON]]
+[[PLACE]]
+[[AUTHOR]]
+[[SCIENTIST]]
+[[FEATURES]]
+[[CHARACTERISTICS]]
+[[CLASSIFICATION]]
+[[CATEGORIES]]
+[[TYPES]]
+[[STRUCTURE]]
+[[COMPONENTS]]
+[[ELEMENTS]]
+[[PRINCIPLES]]
+[[PROPERTIES]]
+[[ADVANTAGES]]
+[[DISADVANTAGES]]
+[[MERITS]]
+[[DEMERITS]]
+[[CAUSES]]
+[[EFFECTS]]
+[[IMPACTS]]
+[[APPLICATIONS]]
+[[USES]]
+[[FUNCTIONS]]
+[[LIMITATIONS]]
+[[PROCESS]]
+[[WORKING]]
+[[MECHANISM]]
+[[STEPS]]
+[[ALGORITHM]]
+[[FLOW]]
+[[LIFE CYCLE]]
+[[DIAGRAM]]
+[[MAP]]
+[[GRAPH]]
+[[CHART]]
+[[TABLE]]
+[[TREE]]
+[[PYRAMID]]
+[[CYCLE]]
+[[TIMELINE]]
+[[COMPARISON]]
+[[DIFFERENCE]]
+[[SIMILARITIES]]
+[[EXAMPLE]]
+[[ILLUSTRATION]]
+[[CASE STUDY]]
+[[SCENARIO]]
+[[HISTORICAL BACKGROUND]]
+[[BACKGROUND]]
+[[KEYWORDS]]
+[[GLOSSARY]]
+[[VOCABULARY]]
+[[DO YOU KNOW?]]
+[[DID YOU KNOW?]]
+[[SHORT NOTE]]
+[[LONG ANSWER]]
+[[ESSAY]]
+[[QUESTION]]
+[[ANSWER]]
+[[PRACTICE QUESTION]]
+[[EXPECTED QUESTION]]
+[[PREVIOUS YEAR QUESTION]]
+[[VIVA QUESTION]]
+[[INTERVIEW QUESTION]]
+[[MCQ]]
+[[TRUE OR FALSE]]
+[[MATCH THE FOLLOWING]]
+[[ASSERTION REASON]]
+[[FILL IN THE BLANK]]
+[[ONE WORD]]
+[[SHORT ANSWER]]
+[[LONG QUESTION]]
+[[HOTS]]
+[[ANALYSIS]]
+[[EXPLANATION]]
+[[SUMMARY]]
+[[CONCLUSION]]
+[[REVISION POINTS]]
+[[LAST MINUTE REVISION]]
+[[CHEAT SHEET]]
+[[QUICK REVISION]]
+[[CHECKLIST]]
+[[REFERENCE]]
+[[BIBLIOGRAPHY]]
+[[SOURCE]]
+
+------------------------------------------
+
+FORMATTING RULES
+
+• Output ONLY formatted notes.
+
+• Never include conversational text.
+
+• Never explain formatting.
+
+• Never generate empty blocks.
+
+• ⚡ MANDATORY: Maximize the use of embedded blocks (like [[EXAMPLE]], [[IMPORTANT]], [[FACT]]) instead of writing plain text paragraphs.
+
+• Use only blocks relevant to the topic.
+
+• Use headings and subheadings appropriately.
+
+• Keep paragraphs concise.
+
+• Use bullet points for lists.
+
+• Use numbered lists for sequences.
+
+• Use tables for comparisons. To create a table it should add [[TABLE]] before the markdown table.
+
+• Use FLOW blocks for processes.
+
+• Use TIMELINE blocks for chronological events.
+
+• Use FORMULA blocks for equations.
+
+• Use UNIT and SYMBOL blocks wherever applicable.
+
+• Include EXAMPLE blocks whenever possible.
+
+• Include CASE STUDY for real-world understanding.
+
+• Include MEMORY TRICK for memorization.
+
+• Include EXAM TIP for scoring strategy.
+
+• Highlight high-weight concepts using IMPORTANT and VERY IMPORTANT.
+
+• Include FACT BOX or DID YOU KNOW? for interesting information.
+
+• Include KEYWORDS and GLOSSARY for revision.
+
+• Include SUMMARY and CONCLUSION for medium and long answers.
+
+• Include REVISION POINTS and LAST MINUTE REVISION for 10+ mark answers.
+
+• Include CHEAT SHEET for quick recall when appropriate.
+
+• Include PRACTICE QUESTIONS for self-assessment.
+
+• Include MCQs, TRUE/FALSE, FILL IN THE BLANK, and ONE WORD questions wherever applicable.
+
+• For History topics include BACKGROUND, HISTORICAL BACKGROUND, TIMELINE, DATE, YEAR, EVENT, PERSON, and PLACE.
+
+• For Science topics include FORMULA, LAW, THEORY, PRINCIPLE, PROCESS, MECHANISM, FLOW, UNIT, SYMBOL.
+
+• For Mathematics include FORMULA, STEPS, ALGORITHM, EXAMPLE, MEMORY TRICK, and COMMON MISTAKE.
+
+• For Economics and Commerce include TABLE, COMPARISON, DIFFERENCE, ADVANTAGES, and DISADVANTAGES.
+
+• Maintain factual accuracy.
+
+• Avoid repetition.
+
+• Make notes visually clean and easy to scan.
+
+• Optimize output for last-minute revision.
+
+• Send the entire final answer inside an embedded markdown code block (&#96;&#96;&#96;).
+
+• The output should be ready for direct rendering in an academic notes application without any manual editing.&#96;&#96;&#96;</div>
+          <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">
+            <i class="fa-solid fa-copy"></i> Copy Prompt
+          </button>
+        </div>
+        </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-image">
+        <img src="images/chatgpt.png" alt="ChatGPT Prompt Page">
+      </div>
+      <div class="step-text">
+        <h2 style="color: #ffcc33;">3. ChatGPT Prompt Page</h2>
+        <div class="purpose"><strong>Screen Purpose:</strong> Configure ChatGPT to generate notes in the StudySphere format.</div>
+        
+        <div class="embed-box glass-yellow">
+          <h4>🟨 Steps to Follow:</h4>
+          <ul>
+            <li><strong>1.</strong> Open ChatGPT.</li>
+            <li><strong>2.</strong> Paste the copied StudySphere formatting prompt.</li>
+            <li><strong>3.</strong> Send the prompt.</li>
+            <li><strong>4.</strong> ChatGPT will now understand the required formatting structure.</li>
+            <li><strong>5.</strong> Ask your study question.</li>
+          </ul>
+        </div>
+
+        <div class="embed-box glass-neutral">
+          <h4>💡 Example Prompts:</h4>
+          <p><em>"Thermodynamics 15 marks"</em><br>or<br><em>"Art and Architecture of Medieval India"</em><br><br>ChatGPT will generate content following the StudySphere formatting rules.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row reverse">
+      <div class="step-image">
+        <img src="images/format.png" alt="ChatGPT Generated Format">
+      </div>
+      <div class="step-text">
+        <h2 style="color: #4dff4d;">4. Generated Format</h2>
+        <div class="purpose"><strong>Screen Purpose:</strong> ChatGPT generates notes that are already formatted for StudySphere.</div>
+        
+        <div class="embed-box glass-green">
+          <h4>🟩 What You Will Receive</h4>
+          <p>The output may contain: Headings, Definitions, Keywords, Facts, Timelines, Tables, Flow Charts, Examples, Revision Blocks, Exam Tips, Memory Tricks, and Summaries.</p>
+        </div>
+
+          <div class="embed-box glass-neutral">
+          <h4>⚡ Ready to Use</h4>
+          <p>The generated response is already structured and can be copied directly into the StudySphere Note Editor without additional formatting.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-image">
+        <img src="images/doc-manager0.png" alt="Create Note">
+      </div>
+      <div class="step-text">
+        <h2 style="color: #ff4d4d;">5. Create Note</h2>
+        <div class="purpose"><strong>Screen Purpose:</strong> Open the StudySphere Note Editor to begin assembly.</div>
+        
+        <div class="embed-box glass-red">
+          <h4>🟥 Create Note Button</h4>
+          <p>Tap <strong>Create Note</strong> to launch the editor. This is the main workspace used for creating notes. Here you can paste your ChatGPT notes, edit content, add headings, format text, preview, and export.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row reverse">
+      <div class="step-image">
+        <img src="images/editor.png" alt="StudySphere Note Editor">
+      </div>
+      <div class="step-text">
+        <h2 style="color: #00e5ff;">6. Note Editor</h2>
+        <div class="purpose"><strong>Screen Purpose:</strong> Create, edit, and export your study notes.</div>
+        
+        <div class="embed-box glass-green">
+          <h4>🟩 Note Title</h4>
+          <p>Enter the title of your note (e.g., <em>Thermodynamics</em>).</p>
+        </div>
+
+        <div class="embed-box glass-blue">
+          <h4>🟦 Quick Formatting Toolbar</h4>
+          <p>Use these to structure notes without manually typing symbols:<br>
+          <strong>#</strong> Main Heading | <strong>##</strong> Sub Heading | <strong>###</strong> Section Heading<br>
+          <strong>*</strong> Bold Text | <strong>=</strong> Highlight Text</p>
+        </div>
+
+        <div class="embed-box glass-yellow">
+          <h4>🟨 AI Assistant</h4>
+          <p>Opens StudySphere AI features for note assistance and enhancement.</p>
+        </div>
+
+        <div class="embed-box glass-orange">
+          <h4>🟧 Export Menu</h4>
+          <p>Opens export options for your finalized notes.</p>
+        </div>
+
+        <div class="embed-box glass-purple">
+          <h4>🟪 Export as TXT</h4>
+          <p>Save as a plain text document. Best for editing later, sharing text, or backups.</p>
+        </div>
+
+        <div class="embed-box glass-red">
+          <h4>🟥 Export as PDF</h4>
+          <p>Convert into a formatted PDF document. Best for printing, exam prep, offline reading, or sharing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header" style="margin-top: 80px; margin-bottom: 20px;">
+      <h2>Complete Workflow</h2>
+    </div>
+    <div class="workflow-diagram">
+      <span>DOC MANAGER PRO</span>
+      ↓<br>
+      <span>Tap Information (i)</span>
+      ↓<br>
+      <span>Copy ChatGPT Prompt</span>
+      ↓<br>
+      <span>Open ChatGPT</span>
+      ↓<br>
+      <span>Paste Prompt</span>
+      ↓<br>
+      <span>Ask Question</span>
+      ↓<br>
+      <span>Receive Formatted Notes</span>
+      ↓<br>
+      <span>Copy Notes</span>
+      ↓<br>
+      <span>Return to StudySphere</span>
+      ↓<br>
+      <span>Tap Create Note</span>
+      ↓<br>
+      <span>Paste Notes</span>
+      ↓<br>
+      <span>Edit / Format</span>
+      ↓<br>
+      <span>Export as TXT or PDF</span>
+    </div>
+
+  </div> <script>
+    function copyPrompt() {
+      // Get the text content of the prompt
+      const promptText = document.getElementById('studySpherePrompt').innerText;
+      
+      // Create an invisible textarea to hold the text securely
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = promptText;
+      
+      // Move it off-screen so it doesn't mess up the page layout
+      tempTextArea.style.position = 'absolute';
+      tempTextArea.style.left = '-9999px';
+      document.body.appendChild(tempTextArea);
+      
+      // Select the text (specifically tailored for mobile devices)
+      tempTextArea.select();
+      tempTextArea.setSelectionRange(0, 99999); 
+      
+      try {
+        // Execute the copy command
+        document.execCommand('copy');
+        
+        // Change button style to show success
+        const btn = document.getElementById('copyBtn');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        btn.classList.add('copied');
+        
+        // Revert button back after 2 seconds
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy Prompt';
+          btn.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+        alert("Your browser blocked the copy action. Please manually highlight and copy the text.");
+      }
+      
+      // Clean up the invisible textarea
+      document.body.removeChild(tempTextArea);
+    }
+  </script>
+</body>
+</html>
