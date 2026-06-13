@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Study Sphere - Supercharge Your Study Notes</title>
+    <meta name="google-site-verification" content="HTr968ZHR7CTh8Ku2d0ONIUG5TrzpQC074-Kc610OUk" />
+    <style>
+      /* Modern Academic Background - Deep Blues */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Avenir', 'Segoe UI', sans-serif;
+        background: linear-gradient(-45deg, #0a1128, #121e3d, #08152e, #0f2547);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: #ffffff; 
+        line-height: 1.6;
+      }
+
+      @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Container for scrolling layout */
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* Reusable Liquid Glass Panel */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.03); 
+        backdrop-filter: blur(16px); 
+        -webkit-backdrop-filter: blur(16px); 
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+      }
+
+      /* Accents */
+      .text-cyan {
+        color: #00e5ff;
+      }
+      h1, h2, h3 {
+        font-weight: 600;
+        margin-top: 0;
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        color: #ffffff;
+      }
+
+      /* Buttons */
+      .btn-container {
+        margin-top: 25px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+      .download-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #00b4d8, #0077b6);
+        color: #ffffff;
+        text-decoration: none;
+        padding: 15px 30px;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+        border: none;
+      }
+      .download-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 180, 216, 0.6);
+      }
+      
+      .secondary-btn {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.05);
+        color: #00e5ff;
+        text-decoration: none;
+        padding: 14px 28px;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+      }
+      .secondary-btn:hover {
+        background: rgba(0, 229, 255, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
+        transform: translateY(-3px);
+      }
+
+      /* Hero Section */
+      .hero {
+        text-align: center;
+        padding: 40px 0;
+      }
+      .hero h1 {
+        font-size: 42px;
+        margin-bottom: 15px;
+      }
+      .hero p {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 700px;
+        margin: 0 auto 15px auto;
+      }
+
+      /* Grids for Cards */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: transform 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .card i {
+        font-size: 30px;
+        color: #00e5ff;
+        margin-bottom: 15px;
+      }
+
+      /* FAQ Section */
+      details {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        margin-bottom: 15px;
+        padding: 15px 20px;
+        cursor: pointer;
+      }
+      summary {
+        font-weight: 600;
+        font-size: 16px;
+        list-style: none;
+        outline: none;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      details p {
+        margin-top: 15px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 15px;
+      }
+
+      /* Footer & Socials */
+      a.social-link {
+        color: #ffffff;
+        transition: 0.3s;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 22px;
+      }
+      a.social-link:hover {
+        color: #00e5ff;
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); 
+      }
+      .footer-links {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="hero glass-panel">
+      <h1>Supercharge Your Study Notes with <span class="text-cyan">AI</span></h1>
+      <p>Paste AI-generated text and instantly render visually structured, revision-ready notes. Organize, edit, and export to PDF in seconds.</p>
+      
+      <div class="btn-container">
+        <a href="download.html" class="download-btn">
+          <i class="fa-brands fa-android" style="margin-right: 8px;"></i> Download App (.apk)
+        </a>
+        <a href="tutorial.html" class="secondary-btn">
+          <i class="fa-solid fa-desktop" style="margin-right: 8px;"></i> See App Screens
+        </a>
+        <a href="create-notes.html" class="secondary-btn">
+          <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> Note Creation Guide
+        </a>
+      </div>
+    </div>
+
+    <div class="glass-panel">
+      <h2>How It Works</h2>
+      <div class="grid">
+        <div class="card">
+          <i class="fa-solid fa-copy"></i>
+          <h3>Step 1: Copy the Prompt</h3>
+          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Use our built-in, highly optimized prompt to instruct your favorite AI (ChatGPT or Gemini).</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-paste"></i>
+          <h3>Step 2: Generate & Paste</h3>
+          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Let the AI do the heavy lifting, then paste the response directly into our editor.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <h3>Step 3: Render & Export</h3>
+          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Watch the text instantly transform into rich UI blocks. Save to your library or export to PDF.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-panel">
+      <h2>Core Features</h2>
+      <div class="grid">
+        <div class="card">
+          <i class="fa-solid fa-layer-group"></i>
+          <h3>Rich Embedded Blocks</h3>
+          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Supports 70+ academic formatting blocks including Memory Tricks, Formulas, Comparison Tables, Timelines, and Exam Tips.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-brain"></i>
+          <h3>Built for Revision</h3>
+          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Visual structure with icons and color-coded warning/caution boxes helps your brain digest and memorize complex concepts faster.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-file-pdf"></i>
+          <h3>Export to PDF</h3>
+          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Turn dynamic modules into beautiful, printable PDFs to study offline or share with your classmates instantly.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-folder-tree"></i>
+          <h3>Smart Library</h3>
+          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Keep all your subjects organized in one place. Edit drafts on the go with our full markdown editor.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-panel">
+      <h2>Who is Study Sphere for?</h2>
+      <div class="grid">
+        <div class="card" style="text-align: center;">
+          <h3 class="text-cyan">Students</h3>
+          <p style="color: rgba(255,255,255,0.8); font-size: 14px;">Ace your exams with perfectly structured summaries, cheat sheets, and practice questions.</p>
+        </div>
+        <div class="card" style="text-align: center;">
+          <h3 class="text-cyan">Educators</h3>
+          <p style="color: rgba(255,255,255,0.8); font-size: 14px;">Generate gorgeous handouts, study guides, and lesson plans for your classes effortlessly.</p>
+        </div>
+        <div class="card" style="text-align: center;">
+          <h3 class="text-cyan">Researchers</h3>
+          <p style="color: rgba(255,255,255,0.8); font-size: 14px;">Organize your findings, case studies, and historical timelines into readable, dynamic formats.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-panel">
+      <h2>Frequently Asked Questions</h2>
+      
+      <details>
+        <summary><i class="fa-solid fa-chevron-down text-cyan" style="margin-right: 10px;"></i> Do I need a ChatGPT API key?</summary>
+        <p>No! You do not need to connect an API. You simply use your own AI account (like ChatGPT or Gemini) to generate the text, and then paste it directly into our app.</p>
+      </details>
+      
+      <details>
+        <summary><i class="fa-solid fa-chevron-down text-cyan" style="margin-right: 10px;"></i> Can I edit the notes after they are generated?</summary>
+        <p>Yes, the app features a full markdown editor allowing you to tweak, add, or remove information from the generated UI blocks before saving.</p>
+      </details>
+
+      <details>
+        <summary><i class="fa-solid fa-chevron-down text-cyan" style="margin-right: 10px;"></i> Is it available offline?</summary>
+        <p>Yes, your saved library and drafts are stored securely on your device, meaning you can revise your generated notes even without an internet connection.</p>
+      </details>
+
+      <details>
+        <summary><i class="fa-solid fa-chevron-down text-cyan" style="margin-right: 10px;"></i> Are the exported PDFs watermarked?</summary>
+        <p>Currently, exported PDFs are completely clean and ready for professional academic use or sharing with your peer groups.</p>
+      </details>
+    </div>
+
+    <div class="glass-panel" style="text-align: center;">
+      <h2 style="margin-bottom: 10px;">Ready to upgrade your study sessions?</h2>
+      <p style="color: rgba(255,255,255,0.7); margin-bottom: 25px;">Join the future of academic organization today.</p>
+      
+      <div class="btn-container" style="margin-bottom: 40px;">
+        <a href="download.html" class="download-btn">
+          <i class="fa-brands fa-android" style="margin-right: 8px;"></i> Download App (.apk)
+        </a>
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+
+      <h3 style="font-size: 18px; font-weight: normal; margin-bottom: 15px;">We Value Your Feedback</h3>
+      <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px; margin-bottom: 30px; text-align: left;">
+          <script type="text/javascript" src="https://form.jotform.com/jsform/261488386090062"></script>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <div style="margin-bottom: 20px;">
+        <a href="https://instagram.com/darki0047/" target="_blank" class="social-link" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/919674015783" target="_blank" class="social-link" title="WhatsApp Chat"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://whatsapp.com/channel/0029VbCL8qz42Dcm7GKuGF3N" target="_blank" class="social-link" title="WhatsApp Channel"><i class="fa-solid fa-bullhorn"></i></a>
+        <a href="https://t.me/Studysphereapp" target="_blank" class="social-link" title="Telegram Channel"><i class="fa-brands fa-telegram"></i></a>
+        <a href="tel:+919674015783" class="social-link" title="Phone"><i class="fa-solid fa-phone"></i></a>
+      </div>
+
+      <div class="footer-links">
+        <p style="margin: 0;">
+          <strong>🛡️ Discretion & Confidentiality:</strong> Any feedback, suggestions, or bug reports submitted are handled with the utmost discretion. Study Sphere is committed to maintaining a secure and private educational environment. 
+          <br><br>
+          <a href="privacy.html" style="color: #00e5ff; text-decoration: none; border-bottom: 1px dotted rgba(0,229,255,0.5); transition: 0.3s;">Read our full Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+
+  </div> </body>
+</html>
+
