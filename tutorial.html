@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Study Sphere - User Manual</title>
+    <style>
+      /* Background Theme */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Avenir', 'Segoe UI', sans-serif;
+        background: linear-gradient(-45deg, #0a1128, #121e3d, #08152e, #0f2547);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: #ffffff; 
+        line-height: 1.6;
+      }
+
+      @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-btn {
+        color: #00e5ff;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.3s;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 10px 20px;
+        border-radius: 30px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        display: inline-block;
+      }
+      .nav-btn:hover {
+        background: rgba(0, 229, 255, 0.1);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        transform: translateY(-2px);
+      }
+
+      /* Header Styling */
+      .page-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .page-header h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+      .page-header p {
+        color: rgba(255,255,255,0.7);
+        font-size: 18px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Flowing Zig-Zag Layout */
+      .step-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 60px;
+        gap: 50px;
+        background: rgba(255, 255, 255, 0.03); 
+        backdrop-filter: blur(16px); 
+        -webkit-backdrop-filter: blur(16px); 
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
+        border-radius: 20px;
+        padding: 40px;
+      }
+      
+      .step-row.reverse {
+        flex-direction: row-reverse;
+      }
+
+      .step-text {
+        flex: 1.2;
+      }
+      .step-text h2 {
+        color: #00e5ff;
+        font-size: 28px;
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+      .step-text .purpose {
+        font-size: 16px;
+        color: #ffffff;
+        margin-bottom: 20px;
+        background: rgba(0, 229, 255, 0.1);
+        padding: 10px 15px;
+        border-left: 4px solid #00e5ff;
+        border-radius: 4px;
+      }
+      
+      /* Clean Lists */
+      .step-text ul {
+        padding-left: 20px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .step-text li {
+        margin-bottom: 12px;
+      }
+      .step-text strong {
+        color: #ffffff;
+      }
+
+      .step-image {
+        flex: 0.8;
+        text-align: center;
+      }
+      .step-image img {
+        width: 100%;
+        max-width: 320px; 
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: transform 0.3s;
+      }
+      .step-image img:hover {
+        transform: scale(1.03);
+      }
+
+      /* Workflow Diagram for Navigation Flow */
+      .workflow-diagram {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 40px;
+        text-align: center;
+        color: rgba(255,255,255,0.7);
+        font-size: 15px;
+        margin-top: 20px;
+        line-height: 1.8;
+      }
+      .workflow-diagram span {
+        display: block;
+        color: #ffffff;
+        font-weight: 600;
+        background: rgba(255,255,255,0.05);
+        padding: 12px;
+        border-radius: 8px;
+        margin: 5px auto;
+        max-width: 300px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        letter-spacing: 1px;
+      }
+      .workflow-diagram i {
+        color: #00e5ff;
+        margin: 5px 0;
+        font-size: 14px;
+      }
+      .nav-items {
+        margin-bottom: 40px;
+      }
+
+      /* Bottom CTA Section */
+      .bottom-cta {
+        text-align: center;
+        margin-top: 60px;
+        background: rgba(255, 255, 255, 0.03); 
+        backdrop-filter: blur(16px); 
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+        border-radius: 20px;
+        padding: 50px 20px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .step-row, .step-row.reverse {
+          flex-direction: column;
+          padding: 30px 20px;
+        }
+        .step-image img {
+          max-width: 250px;
+        }
+        .nav-bar {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+    </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <div class="nav-bar">
+      <a href="index.html" class="nav-btn"><i class="fa-solid fa-arrow-left"></i> Home</a>
+      <a href="create-notes.html" class="nav-btn">Note Creation Guide <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <div class="page-header">
+      <h1>Study Sphere Manual</h1>
+      <p>Screen overview and feature guide for navigating your central hub for academic excellence.</p>
+    </div>
+
+    <div class="step-row">
+      <div class="step-image">
+        <img src="images/dashboard.png" alt="Dashboard Screen">
+      </div>
+      <div class="step-text">
+        <h2>1. Dashboard (Home)</h2>
+        <div class="purpose"><strong>Purpose:</strong> The main overview page that provides quick access to study resources, tasks, storage information, and recently used content.</div>
+        
+        <h3>What You Can See:</h3>
+        <ul>
+          <li><strong>App Header:</strong> Displays the StudySphere logo, application name, personalized greeting, and user profile picture.</li>
+          <li><strong>Countdown Widget:</strong> Shows important upcoming events and the number of days remaining until the selected event.</li>
+          <li><strong>Drive Storage Widget:</strong> Displays Google Drive storage usage with a visual progress bar.</li>
+          <li><strong>Study Tasks:</strong> View your current study tasks. Completed tasks appear checked. Easily add new tasks (+) or remove them (×).</li>
+          <li><strong>Recent Folders & Files:</strong> Quick access to continue studying from your recently opened documents and folders, including item counts.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-row reverse">
+      <div class="step-image">
+        <img src="images/library.png" alt="Library Dashboard Screen">
+      </div>
+      <div class="step-text">
+        <h2>2. Library Dashboard</h2>
+        <div class="purpose"><strong>Purpose:</strong> Used to organize, search, and manage all of your study materials securely.</div>
+        
+        <h3>What You Can See:</h3>
+        <ul>
+          <li><strong>Search & Top Actions:</strong> Search files by name or tag. Access cloud sync options, create folders, and toggle between grid and list layouts.</li>
+          <li><strong>File & Folder List:</strong> Each item displays its icon, name, and metadata (last upload time, shared status, and file type). Access the three-dot menu for additional actions.</li>
+          <li><strong>Floating Action Button (+):</strong> A quick menu to upload new files, create folders, and import study materials.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-image">
+        <img src="images/doc-manager.png" alt="Document Manager Screen">
+      </div>
+      <div class="step-text">
+        <h2>3. Document Manager Pro</h2>
+        <div class="purpose"><strong>Purpose:</strong> Helps users create, scan, and manage new study documents on the fly.</div>
+        
+        <h3>What You Can See:</h3>
+        <ul>
+          <li><strong>Create in Docs:</strong> Instantly create and edit text documents directly via Google Docs integration.</li>
+          <li><strong>Scan Doc:</strong> Use your device camera to scan physical study materials and convert them into digital files.</li>
+          <li><strong>Create Note:</strong> Write manual text notes, perfect for quick study sessions and instant PDF generation.</li>
+          <li><strong>Recent Documents:</strong> A history list of recently created or edited documents (shows empty state when no documents exist).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-row reverse">
+      <div class="step-image">
+        <img src="images/calendar.png" alt="Calendar Screen">
+      </div>
+      <div class="step-text">
+        <h2>4. Calendar & Schedule</h2>
+        <div class="purpose"><strong>Purpose:</strong> Helps manage academic reminders, schedules, countdowns, and important events.</div>
+        
+        <h3>What You Can See:</h3>
+        <ul>
+          <li><strong>Calendar Widget:</strong> A weekly calendar view that highlights the selected date and allows smooth navigation.</li>
+          <li><strong>Reminders Section:</strong> View all reminders for the selected day, or add new ones with the (+) button.</li>
+          <li><strong>Day Counters:</strong> Track important future events and the remaining days. You can pin important counters or delete them as needed.</li>
+          <li><strong>Countdown Timers:</strong> Create precise countdown timers for highly specific events like exams or assignment submissions.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-image">
+        <img src="images/settings.png" alt="Settings Screen">
+      </div>
+      <div class="step-text">
+        <h2>5. Settings Page</h2>
+        <div class="purpose"><strong>Purpose:</strong> Allows users to customize application behavior, layout, and account preferences.</div>
+        
+        <h3>What You Can See:</h3>
+        <ul>
+          <li><strong>Profile Section:</strong> Manage your user picture, username, account information, edit profile, and secure logout.</li>
+          <li><strong>Navigation Customization:</strong> Enable custom bottom navigation order, rearrange buttons, or set the Library as the default home page.</li>
+          <li><strong>System & Sync:</strong> Toggle automatic Google Drive synchronization and dashboard storage statistics.</li>
+          <li><strong>Time Zone & Credits:</strong> Configure local timezones for accurate calendar events, and view developer information and contact buttons.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="page-header" style="margin-top: 60px; margin-bottom: 20px;">
+      <h2 style="color: #ffffff;">App Navigation Map</h2>
+    </div>
+    <div class="workflow-diagram">
+      
+      <span>DASHBOARD</span>
+      <i class="fa-solid fa-arrow-down"></i><br>
+      <div class="nav-items">Recent Files &nbsp;|&nbsp; Recent Folders &nbsp;|&nbsp; Tasks &nbsp;|&nbsp; Countdowns</div>
+
+      <span>LIBRARY</span>
+      <i class="fa-solid fa-arrow-down"></i><br>
+      <div class="nav-items">Search Files &nbsp;|&nbsp; Upload Files &nbsp;|&nbsp; Create Folder &nbsp;|&nbsp; Manage Documents</div>
+
+      <span>DOCUMENT MANAGER</span>
+      <i class="fa-solid fa-arrow-down"></i><br>
+      <div class="nav-items">Create Docs &nbsp;|&nbsp; Scan Documents &nbsp;|&nbsp; Create Notes</div>
+
+      <span>CALENDAR</span>
+      <i class="fa-solid fa-arrow-down"></i><br>
+      <div class="nav-items">Reminders &nbsp;|&nbsp; Day Counters &nbsp;|&nbsp; Countdown Timers</div>
+
+      <span>SETTINGS</span>
+      <i class="fa-solid fa-arrow-down"></i><br>
+      <div class="nav-items" style="margin-bottom: 0;">Profile &nbsp;|&nbsp; Navigation Layout &nbsp;|&nbsp; Google Drive Sync &nbsp;|&nbsp; Storage Options &nbsp;|&nbsp; App Info</div>
+      
+    </div>
+
+    <div class="bottom-cta">
+      <h2 style="margin-top: 0;">Ready to see how notes are generated?</h2>
+      <p style="color: rgba(255,255,255,0.7); margin-bottom: 25px;">Check out our step-by-step workflow for creating Study Sphere modules using AI.</p>
+      <a href="create-notes.html" class="nav-btn" style="font-size: 18px; padding: 15px 30px;">
+        <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> View Note Creation Guide
+      </a>
+    </div>
+
+  </div> </body>
+</html>
+
