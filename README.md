@@ -53,7 +53,7 @@ Stop reading boring walls of text. Study Sphere uses a highly optimized Master P
 
 Study Sphere is currently in active development for Android devices.
 
-**[👉 Click here to visit our website and download the latest .apk](https://studysphereapk.github.io/studysphereapk/)**
+**[👉 Click here to visit our website and download the latest .apk](https://studysphereapk.github.io/)**
 
 *Note: Because the app is not yet published on the Google Play Store, your Android device may display a standard "File might be harmful" warning. It is 100% safe to tap "Download anyway" to proceed.*
 
