@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-B366FF?style=for-the-badge)](#)
 [![Website](https://img.shields.io/badge/Website-Live_Now-FFCC33?style=for-the-badge&logo=google-chrome&logoColor=white)](#)
 
-<img src="comparison.png" alt="Study Sphere App Preview" width="700" style="border-radius: 15px; box-shadow: 0px 10px 20px rgba(0,0,0,0.5);"/>
+<img src="images/comparison.png" alt="Study Sphere App Preview" width="700" style="border-radius: 15px; box-shadow: 0px 10px 20px rgba(0,0,0,0.5);"/>
 
 > **Study Sphere** is a next-generation academic note-taking application designed to parse standard Markdown text from AI (like ChatGPT or Gemini) and instantly render it into highly structured, visually engaging UI blocks.
 
