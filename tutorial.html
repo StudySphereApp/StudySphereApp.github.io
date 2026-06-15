@@ -6,63 +6,186 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Study Sphere - User Manual</title>
     <style>
-      /* Background Theme */
+      /* --- BASE & INERTIA SCROLLING --- */
+      html {
+        scroll-behavior: smooth;
+      }
       body {
         margin: 0;
         padding: 0;
-        font-family: 'Avenir', 'Segoe UI', sans-serif;
-        background: linear-gradient(-45deg, #0a1128, #121e3d, #08152e, #0f2547);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
+        font-family: 'Avenir', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #050914;
         color: #ffffff; 
         line-height: 1.6;
+        overflow-x: hidden;
       }
 
-      @keyframes gradientBG {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+      /* Hide default cursor on desktops for the custom glowing cursor */
+      @media (pointer: fine) {
+        body { cursor: none; }
+        a, button, img { cursor: none; }
       }
 
+      /* --- PAGE LOADER --- */
+      #loader {
+        position: fixed;
+        inset: 0;
+        background: #050914;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.8s ease, visibility 0.8s;
+      }
+      .loader-logo {
+        font-size: 40px;
+        color: #00e5ff;
+        animation: pulseLogo 1.5s infinite alternate ease-in-out;
+        filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.6));
+      }
+      @keyframes pulseLogo {
+        0% { transform: scale(0.9); opacity: 0.7; }
+        100% { transform: scale(1.1); opacity: 1; }
+      }
+
+      /* --- AURORA ANIMATED BACKGROUND & BLOBS --- */
+      .aurora-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        overflow: hidden;
+        background: radial-gradient(circle at top left, #0a1128 0%, #050914 100%);
+      }
+      .ambient-blob {
+        position: absolute;
+        filter: blur(90px);
+        opacity: 0.5;
+        border-radius: 50%;
+        animation: floatBlob 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .blob-1 { background: #00e5ff; width: 400px; height: 400px; top: -100px; left: -100px; }
+      .blob-2 { background: #b366ff; width: 500px; height: 500px; bottom: -200px; right: -100px; animation-delay: -5s; }
+      .blob-3 { background: #0077b6; width: 350px; height: 350px; top: 40%; left: 30%; animation-delay: -10s; }
+      
+      @keyframes floatBlob {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(100px, 50px) scale(1.2); }
+        100% { transform: translate(-50px, 150px) scale(0.9); }
+      }
+
+      /* --- CUSTOM CURSOR & SPOTLIGHT --- */
+      .cursor-dot {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: #00e5ff;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px #00e5ff;
+        transition: width 0.2s, height 0.2s;
+      }
+      .cursor-trail {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(0, 229, 255, 0.4);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: top 0.15s ease-out, left 0.15s ease-out, width 0.2s, height 0.2s;
+      }
+      .cursor-hover .cursor-dot { width: 0; height: 0; }
+      .cursor-hover .cursor-trail { width: 60px; height: 60px; background: rgba(0, 229, 255, 0.1); border-color: #00e5ff; backdrop-filter: blur(2px); }
+
+      /* --- PARTICLES --- */
+      .particle {
+        position: fixed;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+        animation: riseUp 5s linear forwards;
+      }
+      @keyframes riseUp {
+        0% { transform: translateY(0) scale(0); opacity: 0; }
+        20% { opacity: 1; }
+        100% { transform: translateY(-500px) scale(1.5); opacity: 0; }
+      }
+
+      /* --- LAYOUT & SCROLL REVEAL --- */
       .container {
         max-width: 1100px;
         margin: 0 auto;
         padding: 40px 20px;
+        position: relative;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
       }
 
-      /* Navigation Bar */
+      /* --- TOP NAVIGATION BAR --- */
       .nav-bar {
         margin-bottom: 40px;
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
+
+      /* --- MAGNETIC BUTTONS WITH RIPPLE --- */
       .nav-btn {
-        color: #00e5ff;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 30px;
         font-size: 16px;
         font-weight: 600;
-        transition: 0.3s;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 10px 20px;
-        border-radius: 30px;
+        color: #00e5ff;
+        background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(0, 229, 255, 0.3);
-        display: inline-block;
+        backdrop-filter: blur(10px);
+        transition: transform 0.2s cubic-bezier(0.3, 0, 0, 1), box-shadow 0.3s ease;
+        overflow: hidden;
       }
       .nav-btn:hover {
         background: rgba(0, 229, 255, 0.1);
-        box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
+      }
+      
+      /* Ripple Effect */
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(0);
+        animation: rippleAnim 0.6s linear;
+        pointer-events: none;
+      }
+      @keyframes rippleAnim {
+        to { transform: scale(4); opacity: 0; }
       }
 
-      /* Header Styling */
+      /* --- HEADER STYLING --- */
       .page-header {
         text-align: center;
         margin-bottom: 60px;
       }
       .page-header h1 {
-        font-size: 36px;
-        margin-bottom: 10px;
+        font-size: 42px;
+        margin-bottom: 15px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
       }
       .page-header p {
         color: rgba(255,255,255,0.7);
@@ -71,77 +194,84 @@
         margin: 0 auto;
       }
 
-      /* Flowing Zig-Zag Layout */
+      /* --- APPLE-STYLE LIQUID GLASS SECTIONS --- */
+      .step-row, .workflow-diagram, .bottom-cta {
+        background: rgba(255, 255, 255, 0.02); 
+        backdrop-filter: blur(24px) saturate(180%); 
+        -webkit-backdrop-filter: blur(24px) saturate(180%); 
+        border: 1px solid rgba(255, 255, 255, 0.08); 
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1); 
+        border-radius: 28px;
+        position: relative;
+        overflow: hidden;
+      }
+      /* Glowing top edge */
+      .step-row::before, .workflow-diagram::before, .bottom-cta::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0,229,255,0.5), transparent);
+        opacity: 0.5;
+      }
+
+      /* Specific Step Row Layout */
       .step-row {
         display: flex;
         align-items: center;
         margin-bottom: 60px;
         gap: 50px;
-        background: rgba(255, 255, 255, 0.03); 
-        backdrop-filter: blur(16px); 
-        -webkit-backdrop-filter: blur(16px); 
-        border: 1px solid rgba(255, 255, 255, 0.1); 
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
-        border-radius: 20px;
         padding: 40px;
       }
-      
       .step-row.reverse {
         flex-direction: row-reverse;
       }
 
+      /* Text Column inside Step Row */
       .step-text {
         flex: 1.2;
       }
       .step-text h2 {
         color: #00e5ff;
-        font-size: 28px;
+        font-size: 32px;
         margin-top: 0;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
       }
       .step-text .purpose {
         font-size: 16px;
         color: #ffffff;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         background: rgba(0, 229, 255, 0.1);
-        padding: 10px 15px;
+        padding: 12px 18px;
         border-left: 4px solid #00e5ff;
-        border-radius: 4px;
+        border-radius: 8px;
       }
-      
-      /* Clean Lists */
       .step-text ul {
         padding-left: 20px;
         color: rgba(255, 255, 255, 0.8);
       }
-      .step-text li {
-        margin-bottom: 12px;
-      }
-      .step-text strong {
-        color: #ffffff;
-      }
+      .step-text li { margin-bottom: 12px; }
+      .step-text strong { color: #ffffff; }
 
+      /* Image Column & 3D Tilt Setup */
       .step-image {
         flex: 0.8;
         text-align: center;
+        perspective: 1000px;
       }
       .step-image img {
         width: 100%;
         max-width: 320px; 
         border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(255,255,255,0.1);
-        transition: transform 0.3s;
-      }
-      .step-image img:hover {
-        transform: scale(1.03);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.1);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        transform-style: preserve-3d;
+        will-change: transform;
       }
 
-      /* Workflow Diagram for Navigation Flow */
+      /* --- WORKFLOW DIAGRAM --- */
       .workflow-diagram {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
         padding: 40px;
         text-align: center;
         color: rgba(255,255,255,0.7);
@@ -155,32 +285,33 @@
         font-weight: 600;
         background: rgba(255,255,255,0.05);
         padding: 12px;
-        border-radius: 8px;
+        border-radius: 12px;
         margin: 5px auto;
-        max-width: 300px;
-        border: 1px solid rgba(0, 229, 255, 0.3);
+        max-width: 320px;
+        border: 1px solid rgba(0, 229, 255, 0.2);
         letter-spacing: 1px;
+        box-shadow: inset 0 0 15px rgba(0,229,255,0.05);
       }
       .workflow-diagram i {
         color: #00e5ff;
-        margin: 5px 0;
-        font-size: 14px;
+        margin: 8px 0;
+        font-size: 16px;
+        animation: bounceDown 2s infinite;
       }
-      .nav-items {
-        margin-bottom: 40px;
+      @keyframes bounceDown {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+        40% {transform: translateY(-5px);}
+        60% {transform: translateY(-3px);}
       }
+      .nav-items { margin-bottom: 40px; }
 
-      /* Bottom CTA Section */
+      /* --- BOTTOM CTA --- */
       .bottom-cta {
         text-align: center;
         margin-top: 60px;
-        background: rgba(255, 255, 255, 0.03); 
-        backdrop-filter: blur(16px); 
-        border: 1px solid rgba(255, 255, 255, 0.1); 
-        border-radius: 20px;
-        padding: 50px 20px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        padding: 60px 20px;
       }
+      .bottom-cta h2 { font-size: 32px; font-weight: 700; margin-top: 0; }
 
       /* Mobile responsiveness */
       @media (max-width: 768px) {
@@ -188,33 +319,42 @@
           flex-direction: column;
           padding: 30px 20px;
         }
-        .step-image img {
-          max-width: 250px;
-        }
-        .nav-bar {
-          flex-direction: column;
-          gap: 15px;
-        }
+        .step-image img { max-width: 250px; }
+        .nav-bar { flex-direction: column; gap: 15px; }
+        .page-header h1 { font-size: 34px; }
       }
     </style>
 </head>
 <body>
 
+  <div id="loader">
+    <i class="fa-solid fa-wand-magic-sparkles loader-logo"></i>
+  </div>
+
+  <div class="aurora-bg">
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+    <div class="ambient-blob blob-3"></div>
+  </div>
+
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-trail" id="cursor-trail"></div>
+
   <div class="container">
     
-    <div class="nav-bar">
-      <a href="index.html" class="nav-btn"><i class="fa-solid fa-arrow-left"></i> Home</a>
-      <a href="create-notes.html" class="nav-btn">Note Creation Guide <i class="fa-solid fa-arrow-right"></i></a>
+    <div class="nav-bar reveal">
+      <a href="index.html" class="nav-btn hover-target"><i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> Home</a>
+      <a href="create-notes.html" class="nav-btn hover-target">Note Creation Guide <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></a>
     </div>
 
-    <div class="page-header">
+    <div class="page-header reveal">
       <h1>Study Sphere Manual</h1>
       <p>Screen overview and feature guide for navigating your central hub for academic excellence.</p>
     </div>
 
-    <div class="step-row">
+    <div class="step-row reveal">
       <div class="step-image">
-        <img src="images/dashboard.png" alt="Dashboard Screen">
+        <img src="images/dashboard.png" alt="Dashboard Screen" class="tilt-img hover-target">
       </div>
       <div class="step-text">
         <h2>1. Dashboard (Home)</h2>
@@ -231,9 +371,9 @@
       </div>
     </div>
 
-    <div class="step-row reverse">
+    <div class="step-row reverse reveal">
       <div class="step-image">
-        <img src="images/library.png" alt="Library Dashboard Screen">
+        <img src="images/library.png" alt="Library Dashboard Screen" class="tilt-img hover-target">
       </div>
       <div class="step-text">
         <h2>2. Library Dashboard</h2>
@@ -248,9 +388,9 @@
       </div>
     </div>
 
-    <div class="step-row">
+    <div class="step-row reveal">
       <div class="step-image">
-        <img src="images/doc-manager.png" alt="Document Manager Screen">
+        <img src="images/doc-manager.png" alt="Document Manager Screen" class="tilt-img hover-target">
       </div>
       <div class="step-text">
         <h2>3. Document Manager Pro</h2>
@@ -266,9 +406,9 @@
       </div>
     </div>
 
-    <div class="step-row reverse">
+    <div class="step-row reverse reveal">
       <div class="step-image">
-        <img src="images/calendar.png" alt="Calendar Screen">
+        <img src="images/calendar.png" alt="Calendar Screen" class="tilt-img hover-target">
       </div>
       <div class="step-text">
         <h2>4. Calendar & Schedule</h2>
@@ -284,9 +424,9 @@
       </div>
     </div>
 
-    <div class="step-row">
+    <div class="step-row reveal">
       <div class="step-image">
-        <img src="images/settings.png" alt="Settings Screen">
+        <img src="images/settings.png" alt="Settings Screen" class="tilt-img hover-target">
       </div>
       <div class="step-text">
         <h2>5. Settings Page</h2>
@@ -302,41 +442,159 @@
       </div>
     </div>
 
-    <div class="page-header" style="margin-top: 60px; margin-bottom: 20px;">
+    <div class="page-header reveal" style="margin-top: 80px; margin-bottom: 20px;">
       <h2 style="color: #ffffff;">App Navigation Map</h2>
     </div>
-    <div class="workflow-diagram">
+    <div class="workflow-diagram reveal">
       
-      <span>DASHBOARD</span>
+      <span class="hover-target">DASHBOARD</span>
       <i class="fa-solid fa-arrow-down"></i><br>
       <div class="nav-items">Recent Files &nbsp;|&nbsp; Recent Folders &nbsp;|&nbsp; Tasks &nbsp;|&nbsp; Countdowns</div>
 
-      <span>LIBRARY</span>
+      <span class="hover-target">LIBRARY</span>
       <i class="fa-solid fa-arrow-down"></i><br>
       <div class="nav-items">Search Files &nbsp;|&nbsp; Upload Files &nbsp;|&nbsp; Create Folder &nbsp;|&nbsp; Manage Documents</div>
 
-      <span>DOCUMENT MANAGER</span>
+      <span class="hover-target">DOCUMENT MANAGER</span>
       <i class="fa-solid fa-arrow-down"></i><br>
       <div class="nav-items">Create Docs &nbsp;|&nbsp; Scan Documents &nbsp;|&nbsp; Create Notes</div>
 
-      <span>CALENDAR</span>
+      <span class="hover-target">CALENDAR</span>
       <i class="fa-solid fa-arrow-down"></i><br>
       <div class="nav-items">Reminders &nbsp;|&nbsp; Day Counters &nbsp;|&nbsp; Countdown Timers</div>
 
-      <span>SETTINGS</span>
+      <span class="hover-target">SETTINGS</span>
       <i class="fa-solid fa-arrow-down"></i><br>
       <div class="nav-items" style="margin-bottom: 0;">Profile &nbsp;|&nbsp; Navigation Layout &nbsp;|&nbsp; Google Drive Sync &nbsp;|&nbsp; Storage Options &nbsp;|&nbsp; App Info</div>
       
     </div>
 
-    <div class="bottom-cta">
-      <h2 style="margin-top: 0;">Ready to see how notes are generated?</h2>
-      <p style="color: rgba(255,255,255,0.7); margin-bottom: 25px;">Check out our step-by-step workflow for creating Study Sphere modules using AI.</p>
-      <a href="create-notes.html" class="nav-btn" style="font-size: 18px; padding: 15px 30px;">
+    <div class="bottom-cta reveal">
+      <h2 style="margin-top: 0; color: #ffffff;">Ready to see how notes are generated?</h2>
+      <p style="color: rgba(255,255,255,0.7); margin-bottom: 30px;">Check out our step-by-step workflow for creating Study Sphere modules using AI.</p>
+      <a href="create-notes.html" class="nav-btn hover-target" style="font-size: 18px; padding: 16px 32px; border-radius: 40px; background: linear-gradient(135deg, #00b4d8, #0077b6); color: white; border: none;">
         <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> View Note Creation Guide
       </a>
     </div>
 
-  </div> </body>
-</html>
+  </div> 
 
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      // 1. REMOVE LOADER
+      setTimeout(() => {
+        const loader = document.getElementById('loader');
+        loader.style.opacity = '0';
+        loader.style.visibility = 'hidden';
+      }, 800);
+
+      // 2. CUSTOM CURSOR
+      const dot = document.getElementById("cursor-dot");
+      const trail = document.getElementById("cursor-trail");
+      
+      // Only run cursor code if not on a touch device
+      if (window.matchMedia("(pointer: fine)").matches) {
+        window.addEventListener("mousemove", (e) => {
+          dot.style.left = `${e.clientX}px`;
+          dot.style.top = `${e.clientY}px`;
+          
+          setTimeout(() => {
+            trail.style.left = `${e.clientX}px`;
+            trail.style.top = `${e.clientY}px`;
+          }, 50);
+        });
+
+        const hoverTargets = document.querySelectorAll(".hover-target, a");
+        hoverTargets.forEach(target => {
+          target.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
+          target.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
+        });
+      }
+
+      // 3. SCROLL REVEAL ANIMATION
+      const reveals = document.querySelectorAll(".reveal");
+      const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+      
+      const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target);
+        });
+      }, revealOptions);
+
+      reveals.forEach(reveal => revealOnScroll.observe(reveal));
+      
+      // Trigger once on load for elements already in view
+      setTimeout(() => { reveals.forEach(r => { if(r.getBoundingClientRect().top < window.innerHeight) r.classList.add('active'); }); }, 900);
+
+      // 4. MAGNETIC BUTTONS & RIPPLE EFFECT
+      const btns = document.querySelectorAll('.nav-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('mousemove', function(e) {
+          const rect = this.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          this.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px) scale(1.05)`;
+        });
+        btn.addEventListener('mouseleave', function() {
+          this.style.transform = `translate(0px, 0px) scale(1)`;
+        });
+
+        btn.addEventListener('click', function(e) {
+          let x = e.clientX - e.target.getBoundingClientRect().left;
+          let y = e.clientY - e.target.getBoundingClientRect().top;
+          let ripples = document.createElement('span');
+          ripples.style.left = x + 'px';
+          ripples.style.top = y + 'px';
+          ripples.classList.add('ripple');
+          this.appendChild(ripples);
+          setTimeout(() => ripples.remove(), 600);
+        });
+      });
+
+      // 5. 3D IMAGE TILT EFFECT (For Screenshots)
+      const tiltImages = document.querySelectorAll('.tilt-img');
+      tiltImages.forEach(img => {
+        img.addEventListener('mousemove', e => {
+          const rect = img.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const rotateX = ((y - centerY) / centerY) * -12; // Tilt amount
+          const rotateY = ((x - centerX) / centerX) * 12;
+          
+          img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+          img.style.boxShadow = `${-rotateY}px ${rotateX + 20}px 40px rgba(0, 229, 255, 0.3), 0 0 0 1px rgba(255,255,255,0.2)`;
+        });
+        
+        img.addEventListener('mouseleave', () => {
+          img.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+          img.style.boxShadow = `0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.1)`;
+        });
+      });
+
+      // 6. FLOATING PARTICLES GENERATOR
+      function createParticle() {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        const size = Math.random() * 4 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.bottom = `-10px`;
+        particle.style.animationDuration = `${Math.random() * 3 + 4}s`;
+        
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 7000);
+      }
+      setInterval(createParticle, 800);
+
+    });
+  </script>
+</body>
+</html>
