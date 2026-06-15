@@ -1,338 +1,2145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>Study Sphere - Supercharge Your Study Notes</title>
-    <meta name="google-site-verification" content="HTr968ZHR7CTh8Ku2d0ONIUG5TrzpQC074-Kc610OUk" />
-    <style>
-      /* Modern Academic Background - Deep Blues */
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Avenir', 'Segoe UI', sans-serif;
-        background: linear-gradient(-45deg, #0a1128, #121e3d, #08152e, #0f2547);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-        color: #ffffff; 
-        line-height: 1.6;
-      }
 
-      @keyframes gradientBG {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-      /* Container for scrolling layout */
-      .container {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 40px 20px;
-      }
+<title>Study Sphere • AI Study Notes</title>
 
-      /* Reusable Liquid Glass Panel */
-      .glass-panel {
-        background: rgba(255, 255, 255, 0.03); 
-        backdrop-filter: blur(16px); 
-        -webkit-backdrop-filter: blur(16px); 
-        border: 1px solid rgba(255, 255, 255, 0.1); 
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
-        border-radius: 20px;
-        padding: 30px;
-        margin-bottom: 30px;
-      }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-      /* Accents */
-      .text-cyan {
-        color: #00e5ff;
-      }
-      h1, h2, h3 {
-        font-weight: 600;
-        margin-top: 0;
-      }
-      h2 {
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 28px;
-        color: #ffffff;
-      }
+<style>
 
-      /* Buttons */
-      .btn-container {
-        margin-top: 25px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-      }
-      .download-btn {
-        display: inline-block;
-        background: linear-gradient(135deg, #00b4d8, #0077b6);
-        color: #ffffff;
-        text-decoration: none;
-        padding: 15px 30px;
-        border-radius: 30px;
-        font-size: 16px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
-        border: none;
-      }
-      .download-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(0, 180, 216, 0.6);
-      }
-      
-      .secondary-btn {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.05);
-        color: #00e5ff;
-        text-decoration: none;
-        padding: 14px 28px;
-        border-radius: 30px;
-        font-size: 16px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: 1px solid rgba(0, 229, 255, 0.3);
-      }
-      .secondary-btn:hover {
-        background: rgba(0, 229, 255, 0.1);
-        box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
-        transform: translateY(-3px);
-      }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-      /* Hero Section */
-      .hero {
-        text-align: center;
-        padding: 40px 0;
-      }
-      .hero h1 {
-        font-size: 42px;
-        margin-bottom: 15px;
-      }
-      .hero p {
-        font-size: 18px;
-        color: rgba(255, 255, 255, 0.8);
-        max-width: 700px;
-        margin: 0 auto 15px auto;
-      }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-      /* Grids for Cards */
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-      }
-      .card {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
-        padding: 25px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        transition: transform 0.3s;
-      }
-      .card:hover {
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .card i {
-        font-size: 30px;
-        color: #00e5ff;
-        margin-bottom: 15px;
-      }
+html{
 
-      /* FAQ Section */
-      details {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 10px;
-        margin-bottom: 15px;
-        padding: 15px 20px;
-        cursor: pointer;
-      }
-      summary {
-        font-weight: 600;
-        font-size: 16px;
-        list-style: none;
-        outline: none;
-      }
-      summary::-webkit-details-marker {
-        display: none;
-      }
-      details p {
-        margin-top: 15px;
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 15px;
-      }
+scroll-behavior:smooth;
 
-      /* Footer & Socials */
-      a.social-link {
-        color: #ffffff;
-        transition: 0.3s;
-        text-decoration: none;
-        margin: 0 10px;
-        font-size: 22px;
-      }
-      a.social-link:hover {
-        color: #00e5ff;
-        text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); 
-      }
-      .footer-links {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        text-align: center;
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.6);
-      }
-    </style>
+}
+
+body{
+
+font-family:Inter,sans-serif;
+
+background:#020617;
+
+color:white;
+
+overflow-x:hidden;
+
+cursor:none;
+
+}
+
+/*==========================
+Animated Aurora Background
+===========================*/
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background:
+
+radial-gradient(circle at 15% 20%,#00d9ff55 0%,transparent 30%),
+
+radial-gradient(circle at 85% 20%,#7c3aed55 0%,transparent 30%),
+
+radial-gradient(circle at 50% 90%,#00ffcc44 0%,transparent 35%),
+
+linear-gradient(135deg,#020617,#07152f,#0f172a,#041126);
+
+background-size:250% 250%;
+
+animation:aurora 18s ease infinite;
+
+z-index:-3;
+
+}
+
+@keyframes aurora{
+
+0%{
+
+background-position:0% 50%;
+
+}
+
+50%{
+
+background-position:100% 50%;
+
+}
+
+100%{
+
+background-position:0% 50%;
+
+}
+
+}
+
+/*======================
+Floating Blobs
+=======================*/
+
+.blob{
+
+position:fixed;
+
+border-radius:50%;
+
+filter:blur(120px);
+
+pointer-events:none;
+
+animation:float 15s infinite alternate ease-in-out;
+
+z-index:-2;
+
+opacity:.4;
+
+}
+
+.blob:nth-child(1){
+
+width:350px;
+
+height:350px;
+
+background:#00e5ff;
+
+left:-120px;
+
+top:-100px;
+
+}
+
+.blob:nth-child(2){
+
+width:300px;
+
+height:300px;
+
+background:#7c3aed;
+
+right:-100px;
+
+top:200px;
+
+animation-duration:18s;
+
+}
+
+.blob:nth-child(3){
+
+width:260px;
+
+height:260px;
+
+background:#22d3ee;
+
+bottom:-80px;
+
+left:35%;
+
+animation-duration:20s;
+
+}
+
+@keyframes float{
+
+from{
+
+transform:translateY(-30px) translateX(0);
+
+}
+
+to{
+
+transform:translateY(80px) translateX(50px);
+
+}
+
+}
+
+/*========================
+Glass Container
+=========================*/
+
+.container{
+
+max-width:1200px;
+
+margin:auto;
+
+padding:50px 25px;
+
+position:relative;
+
+z-index:10;
+
+}
+
+/*=========================
+Liquid Glass Panels
+==========================*/
+
+.glass-panel{
+
+position:relative;
+
+overflow:hidden;
+
+padding:35px;
+
+margin-bottom:35px;
+
+border-radius:30px;
+
+background:
+
+linear-gradient(
+
+135deg,
+
+rgba(255,255,255,.12),
+
+rgba(255,255,255,.04)
+
+);
+
+backdrop-filter:blur(28px);
+
+-webkit-backdrop-filter:blur(28px);
+
+border:1px solid rgba(255,255,255,.15);
+
+box-shadow:
+
+0 10px 40px rgba(0,0,0,.35),
+
+inset 0 1px 1px rgba(255,255,255,.2);
+
+transition:.5s;
+
+}
+
+.glass-panel::before{
+
+content:"";
+
+position:absolute;
+
+top:-100%;
+
+left:-100%;
+
+width:250%;
+
+height:250%;
+
+background:
+
+linear-gradient(
+
+120deg,
+
+transparent,
+
+rgba(255,255,255,.18),
+
+transparent
+
+);
+
+transform:rotate(25deg);
+
+transition:1.2s;
+
+}
+
+.glass-panel:hover::before{
+
+left:100%;
+
+top:100%;
+
+}
+
+.glass-panel:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.45);
+
+}
+
+/*=========================
+Hero Animation
+==========================*/
+
+.hero{
+
+text-align:center;
+
+padding:70px 30px;
+
+animation:fadeUp 1s ease;
+
+}
+
+.hero h1{
+
+font-size:62px;
+
+font-weight:800;
+
+letter-spacing:-2px;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+white,
+
+#7dd3fc,
+
+#38bdf8
+
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+.hero p{
+
+margin-top:20px;
+
+font-size:20px;
+
+opacity:.8;
+
+max-width:760px;
+
+margin-inline:auto;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(80px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:none;
+
+}
+
+}
+
+/*========================
+Cursor
+=========================*/
+
+.cursor{
+
+position:fixed;
+
+width:16px;
+
+height:16px;
+
+border-radius:50%;
+
+background:white;
+
+pointer-events:none;
+
+transform:translate(-50%,-50%);
+
+z-index:999999;
+
+transition:transform .15s;
+
+mix-blend-mode:difference;
+
+}
+
+.cursor-ring{
+
+position:fixed;
+
+width:45px;
+
+height:45px;
+
+border-radius:50%;
+
+border:1px solid rgba(255,255,255,.5);
+
+pointer-events:none;
+
+transform:translate(-50%,-50%);
+
+z-index:999998;
+
+transition:
+
+width .25s,
+
+height .25s,
+
+transform .1s;
+
+}
+
+/*========================
+Magnetic Buttons
+=========================*/
+
+.download-btn,
+
+.secondary-btn{
+
+position:relative;
+
+overflow:hidden;
+
+transition:.35s;
+
+will-change:transform;
+
+}
+
+.download-btn:hover,
+
+.secondary-btn:hover{
+
+transform:translateY(-8px) scale(1.04);
+
+}
+
+/*========================
+3D Cards
+=========================*/
+
+.card{
+
+transform-style:preserve-3d;
+
+transition:
+
+transform .3s,
+
+box-shadow .3s;
+
+}
+
+.card:hover{
+
+box-shadow:
+
+0 25px 50px rgba(0,0,0,.3);
+
+}
+
+/*========================
+Reveal Animation
+=========================*/
+
+.reveal{
+
+opacity:0;
+
+transform:translateY(70px);
+
+transition:1s;
+
+}
+
+.reveal.active{
+
+opacity:1;
+
+transform:none;
+
+}
+
+/*=========================
+Particle Canvas
+==========================*/
+
+#particles{
+
+position:fixed;
+
+inset:0;
+
+z-index:-1;
+
+pointer-events:none;
+
+}
+
+/*=========================
+Ripple
+==========================*/
+
+.ripple{
+
+position:absolute;
+
+border-radius:50%;
+
+transform:scale(0);
+
+background:rgba(255,255,255,.35);
+
+animation:ripple .7s linear;
+
+pointer-events:none;
+
+}
+
+@keyframes ripple{
+
+to{
+
+transform:scale(12);
+
+opacity:0;
+
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
 
-  <div class="container">
+<canvas id="particles"></canvas>
 
-    <div class="hero glass-panel">
-      <h1>Supercharge Your Study Notes with <span class="text-cyan">AI</span></h1>
-      <p>Paste AI-generated text and instantly render visually structured, revision-ready notes. Organize, edit, and export to PDF in seconds.</p>
-      
-      <div class="btn-container">
-        <a href="download.html" class="download-btn">
-          <i class="fa-brands fa-android" style="margin-right: 8px;"></i> Download App (.apk)
-        </a>
-        <a href="tutorial.html" class="secondary-btn">
-          <i class="fa-solid fa-desktop" style="margin-right: 8px;"></i> See App Screens
-        </a>
-        <a href="create-notes.html" class="secondary-btn">
-          <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> Note Creation Guide
-        </a>
-      </div>
-    </div>
+<div class="blob"></div>
+<div class="blob"></div>
+<div class="blob"></div>
 
-    <div class="glass-panel">
-      <h2>How It Works</h2>
-      <div class="grid">
-        <div class="card">
-          <i class="fa-solid fa-copy"></i>
-          <h3>Step 1: Copy the Prompt</h3>
-          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Use our built-in, highly optimized prompt to instruct your favorite AI (ChatGPT or Gemini).</p>
-        </div>
-        <div class="card">
-          <i class="fa-solid fa-paste"></i>
-          <h3>Step 2: Generate & Paste</h3>
-          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Let the AI do the heavy lifting, then paste the response directly into our editor.</p>
-        </div>
-        <div class="card">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-          <h3>Step 3: Render & Export</h3>
-          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Watch the text instantly transform into rich UI blocks. Save to your library or export to PDF.</p>
-        </div>
-      </div>
-    </div>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
 
-    <div class="glass-panel">
-      <h2>Core Features</h2>
-      <div class="grid">
-        <div class="card">
-          <i class="fa-solid fa-layer-group"></i>
-          <h3>Rich Embedded Blocks</h3>
-          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Supports 70+ academic formatting blocks including Memory Tricks, Formulas, Comparison Tables, Timelines, and Exam Tips.</p>
-        </div>
-        <div class="card">
-          <i class="fa-solid fa-brain"></i>
-          <h3>Built for Revision</h3>
-          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Visual structure with icons and color-coded warning/caution boxes helps your brain digest and memorize complex concepts faster.</p>
-        </div>
-        <div class="card">
-          <i class="fa-solid fa-file-pdf"></i>
-          <h3>Export to PDF</h3>
-          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Turn dynamic modules into beautiful, printable PDFs to study offline or share with your classmates instantly.</p>
-        </div>
-        <div class="card">
-          <i class="fa-solid fa-folder-tree"></i>
-          <h3>Smart Library</h3>
-          <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Keep all your subjects organized in one place. Edit drafts on the go with our full markdown editor.</p>
-        </div>
-      </div>
-    </div>
+<!-- ===================================== -->
+<!-- HERO SECTION - PREMIUM ANIMATED -->
+<!-- ===================================== -->
 
-    <div class="glass-panel">
-      <h2>Who is Study Sphere for?</h2>
-      <div class="grid">
-        <div class="card" style="text-align: center;">
-          <h3 class="text-cyan">Students</h3>
-          <p style="color: rgba(255,255,255,0.8); font-size: 14px;">Ace your exams with perfectly structured summaries, cheat sheets, and practice questions.</p>
-        </div>
-        <div class="card" style="text-align: center;">
-          <h3 class="text-cyan">Educators</h3>
-          <p style="color: rgba(255,255,255,0.8); font-size: 14px;">Generate gorgeous handouts, study guides, and lesson plans for your classes effortlessly.</p>
-        </div>
-        <div class="card" style="text-align: center;">
-          <h3 class="text-cyan">Researchers</h3>
-          <p style="color: rgba(255,255,255,0.8); font-size: 14px;">Organize your findings, case studies, and historical timelines into readable, dynamic formats.</p>
-        </div>
-      </div>
-    </div>
+<div class="container">
 
-    <div class="glass-panel">
-      <h2>Frequently Asked Questions</h2>
-      
-      <details>
-        <summary><i class="fa-solid fa-chevron-down text-cyan" style="margin-right: 10px;"></i> Do I need a ChatGPT API key?</summary>
-        <p>No! You do not need to connect an API. You simply use your own AI account (like ChatGPT or Gemini) to generate the text, and then paste it directly into our app.</p>
-      </details>
-      
-      <details>
-        <summary><i class="fa-solid fa-chevron-down text-cyan" style="margin-right: 10px;"></i> Can I edit the notes after they are generated?</summary>
-        <p>Yes, the app features a full markdown editor allowing you to tweak, add, or remove information from the generated UI blocks before saving.</p>
-      </details>
+<div class="hero glass-panel reveal" id="hero">
 
-      <details>
-        <summary><i class="fa-solid fa-chevron-down text-cyan" style="margin-right: 10px;"></i> Is it available offline?</summary>
-        <p>Yes, your saved library and drafts are stored securely on your device, meaning you can revise your generated notes even without an internet connection.</p>
-      </details>
+<div class="hero-glow"></div>
 
-      <details>
-        <summary><i class="fa-solid fa-chevron-down text-cyan" style="margin-right: 10px;"></i> Are the exported PDFs watermarked?</summary>
-        <p>Currently, exported PDFs are completely clean and ready for professional academic use or sharing with your peer groups.</p>
-      </details>
-    </div>
+<div class="hero-content">
 
-    <div class="glass-panel" style="text-align: center;">
-      <h2 style="margin-bottom: 10px;">Ready to upgrade your study sessions?</h2>
-      <p style="color: rgba(255,255,255,0.7); margin-bottom: 25px;">Join the future of academic organization today.</p>
-      
-      <div class="btn-container" style="margin-bottom: 40px;">
-        <a href="download.html" class="download-btn">
-          <i class="fa-brands fa-android" style="margin-right: 8px;"></i> Download App (.apk)
-        </a>
-      </div>
+<span class="hero-badge">
 
-      <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+<i class="fa-solid fa-sparkles"></i>
 
-      <h3 style="font-size: 18px; font-weight: normal; margin-bottom: 15px;">We Value Your Feedback</h3>
-      <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px; margin-bottom: 30px; text-align: left;">
-          <script type="text/javascript" src="https://form.jotform.com/jsform/261488386090062"></script>
-      </div>
-    </div>
+AI Powered Learning
 
-    <div style="text-align: center; margin-top: 20px;">
-      <div style="margin-bottom: 20px;">
-        <a href="https://instagram.com/darki0047/" target="_blank" class="social-link" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://wa.me/919674015783" target="_blank" class="social-link" title="WhatsApp Chat"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="https://whatsapp.com/channel/0029VbCL8qz42Dcm7GKuGF3N" target="_blank" class="social-link" title="WhatsApp Channel"><i class="fa-solid fa-bullhorn"></i></a>
-        <a href="https://t.me/Studysphereapp" target="_blank" class="social-link" title="Telegram Channel"><i class="fa-brands fa-telegram"></i></a>
-        <a href="tel:+919674015783" class="social-link" title="Phone"><i class="fa-solid fa-phone"></i></a>
-      </div>
+</span>
 
-      <div class="footer-links">
-        <p style="margin: 0;">
-          <strong>🛡️ Discretion & Confidentiality:</strong> Any feedback, suggestions, or bug reports submitted are handled with the utmost discretion. Study Sphere is committed to maintaining a secure and private educational environment. 
-          <br><br>
-          <a href="privacy.html" style="color: #00e5ff; text-decoration: none; border-bottom: 1px dotted rgba(0,229,255,0.5); transition: 0.3s;">Read our full Privacy Policy</a>.
-        </p>
-      </div>
-    </div>
+<h1 id="heroTitle">
 
-  </div> </body>
-</html>
+Supercharge Your
+
+<span class="text-cyan">Study Notes</span>
+
+</h1>
+
+<p>
+
+Paste AI-generated text and instantly transform it into
+beautiful, structured, revision-ready notes with rich embedded
+blocks and PDF export.
+
+</p>
+
+<div class="btn-container">
+
+<a href="download.html"
+class="download-btn magnetic ripple-btn">
+
+<i class="fa-brands fa-android"></i>
+
+Download APK
+
+</a>
+
+<a href="tutorial.html"
+class="secondary-btn magnetic ripple-btn">
+
+<i class="fa-solid fa-desktop"></i>
+
+View Screens
+
+</a>
+
+<a href="create-notes.html"
+class="secondary-btn magnetic ripple-btn">
+
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+
+Create Notes
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.hero{
+
+position:relative;
+
+overflow:hidden;
+
+min-height:520px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.hero-glow{
+
+position:absolute;
+
+width:550px;
+
+height:550px;
+
+background:
+
+radial-gradient(circle,
+rgba(0,229,255,.25),
+transparent 70%);
+
+filter:blur(60px);
+
+animation:heroGlow 8s infinite alternate;
+
+pointer-events:none;
+
+}
+
+@keyframes heroGlow{
+
+from{
+
+transform:
+translate(-80px,-50px)
+scale(.9);
+
+}
+
+to{
+
+transform:
+translate(60px,40px)
+scale(1.2);
+
+}
+
+}
+
+.hero-content{
+
+position:relative;
+
+z-index:5;
+
+text-align:center;
+
+}
+
+.hero-badge{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:10px 22px;
+
+border-radius:50px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+margin-bottom:28px;
+
+font-size:14px;
+
+letter-spacing:1px;
+
+}
+
+.hero h1{
+
+font-size:70px;
+
+line-height:1.05;
+
+margin-bottom:25px;
+
+}
+
+.hero p{
+
+max-width:760px;
+
+margin:auto;
+
+font-size:21px;
+
+opacity:.82;
+
+}
+
+.btn-container{
+
+display:flex;
+
+justify-content:center;
+
+gap:18px;
+
+margin-top:45px;
+
+flex-wrap:wrap;
+
+}
+
+.download-btn,
+
+.secondary-btn{
+
+position:relative;
+
+overflow:hidden;
+
+padding:18px 34px;
+
+border-radius:60px;
+
+font-weight:700;
+
+transition:.25s;
+
+}
+
+.download-btn{
+
+background:
+
+linear-gradient(135deg,
+#00d9ff,
+#2563eb);
+
+box-shadow:
+
+0 15px 40px
+rgba(0,180,255,.35);
+
+}
+
+.secondary-btn{
+
+background:
+
+rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+border:1px solid
+rgba(255,255,255,.15);
+
+}
+
+.download-btn:hover,
+
+.secondary-btn:hover{
+
+transform:
+
+translateY(-8px)
+
+scale(1.05);
+
+}
+
+.download-btn::after,
+
+.secondary-btn::after{
+
+content:"";
+
+position:absolute;
+
+top:-100%;
+
+left:-100%;
+
+width:250%;
+
+height:250%;
+
+background:
+
+linear-gradient(
+
+120deg,
+
+transparent,
+
+rgba(255,255,255,.35),
+
+transparent
+
+);
+
+transform:rotate(20deg);
+
+transition:1s;
+
+}
+
+.download-btn:hover::after,
+
+.secondary-btn:hover::after{
+
+left:100%;
+
+top:100%;
+
+}
+
+.text-cyan{
+
+background:
+
+linear-gradient(
+
+90deg,
+
+#00e5ff,
+
+#38bdf8
+
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+</style>
+
+<script>
+
+/*==========================
+Cursor Follow
+==========================*/
+
+const cursor=document.querySelector(".cursor");
+const ring=document.querySelector(".cursor-ring");
+
+window.addEventListener("mousemove",e=>{
+
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+
+ring.style.left=e.clientX+"px";
+ring.style.top=e.clientY+"px";
+
+});
+
+/*==========================
+Magnetic Buttons
+==========================*/
+
+document.querySelectorAll(".magnetic")
+.forEach(btn=>{
+
+btn.addEventListener("mousemove",e=>{
+
+const r=btn.getBoundingClientRect();
+
+const x=e.clientX-r.left-r.width/2;
+
+const y=e.clientY-r.top-r.height/2;
+
+btn.style.transform=
+
+`translate(${x*.15}px,
+${y*.15}px)
+scale(1.05)`;
+
+});
+
+btn.addEventListener("mouseleave",()=>{
+
+btn.style.transform="";
+
+});
+
+});
+
+/*==========================
+Ripple Click Effect
+==========================*/
+
+document.querySelectorAll(".ripple-btn")
+.forEach(btn=>{
+
+btn.addEventListener("click",e=>{
+
+const ripple=document.createElement("span");
+
+ripple.className="ripple";
+
+const rect=btn.getBoundingClientRect();
+
+ripple.style.left=
+(e.clientX-rect.left)+"px";
+
+ripple.style.top=
+(e.clientY-rect.top)+"px";
+
+btn.appendChild(ripple);
+
+setTimeout(()=>{
+
+ripple.remove();
+
+},700);
+
+});
+
+});
+
+/*==========================
+Scroll Reveal
+==========================*/
+
+const observer=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("active");
+
+}
+
+});
+
+},{threshold:.15});
+
+document.querySelectorAll(".reveal")
+.forEach(el=>observer.observe(el));
+
+/*==========================
+Hero Parallax
+==========================*/
+
+document.addEventListener("mousemove",e=>{
+
+const hero=document.getElementById("hero");
+
+const x=(e.clientX/window.innerWidth-.5)*20;
+
+const y=(e.clientY/window.innerHeight-.5)*20;
+
+hero.style.transform=
+
+`perspective(1200px)
+rotateY(${x*.2}deg)
+rotateX(${-y*.2}deg)`;
+
+});
+
+</script>
+
+<!-- ================================================= -->
+<!-- PART 3 - PREMIUM FEATURE CARDS & FAQ ANIMATIONS -->
+<!-- Replace your existing sections with these styles -->
+<!-- ================================================= -->
+
+<style>
+
+/*=========================================
+Feature Grid
+=========================================*/
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(300px,1fr));
+
+gap:28px;
+
+}
+
+/*=========================================
+Apple Glass Cards
+=========================================*/
+
+.card{
+
+position:relative;
+
+overflow:hidden;
+
+padding:30px;
+
+border-radius:26px;
+
+background:
+
+linear-gradient(
+
+135deg,
+
+rgba(255,255,255,.10),
+
+rgba(255,255,255,.04)
+
+);
+
+backdrop-filter:blur(28px);
+
+-webkit-backdrop-filter:blur(28px);
+
+border:
+
+1px solid rgba(255,255,255,.12);
+
+transition:
+
+transform .45s,
+
+box-shadow .45s,
+
+border .45s;
+
+transform-style:preserve-3d;
+
+will-change:transform;
+
+cursor:pointer;
+
+}
+
+/*=========================================
+Animated Glow Border
+=========================================*/
+
+.card::before{
+
+content:"";
+
+position:absolute;
+
+inset:-2px;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+#00e5ff55,
+
+#7c3aed55,
+
+transparent
+
+);
+
+opacity:0;
+
+transition:.6s;
+
+filter:blur(12px);
+
+z-index:-1;
+
+}
+
+.card:hover::before{
+
+opacity:1;
+
+}
+
+/*=========================================
+Floating Reflection
+=========================================*/
+
+.card::after{
+
+content:"";
+
+position:absolute;
+
+width:180%;
+
+height:180%;
+
+background:
+
+linear-gradient(
+
+120deg,
+
+transparent,
+
+rgba(255,255,255,.16),
+
+transparent
+
+);
+
+top:-120%;
+
+left:-120%;
+
+transform:rotate(25deg);
+
+transition:1.1s;
+
+}
+
+.card:hover::after{
+
+top:100%;
+
+left:100%;
+
+}
+
+/*=========================================
+Hover
+=========================================*/
+
+.card:hover{
+
+transform:
+
+translateY(-15px)
+
+scale(1.03)
+
+rotateX(4deg);
+
+box-shadow:
+
+0 25px 70px rgba(0,0,0,.45);
+
+border-color:
+
+rgba(0,229,255,.35);
+
+}
+
+/*=========================================
+Icons
+=========================================*/
+
+.card i{
+
+font-size:42px;
+
+margin-bottom:20px;
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#00e5ff,
+
+#60a5fa,
+
+#7c3aed
+
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+transition:.4s;
+
+}
+
+.card:hover i{
+
+transform:
+
+translateY(-8px)
+
+rotate(10deg)
+
+scale(1.2);
+
+}
+
+/*=========================================
+Titles
+=========================================*/
+
+.card h3{
+
+font-size:23px;
+
+margin-bottom:12px;
+
+font-weight:700;
+
+}
+
+.card p{
+
+opacity:.8;
+
+line-height:1.8;
+
+font-size:15px;
+
+}
+
+/*=========================================
+Floating Animation
+=========================================*/
+
+.card:nth-child(odd){
+
+animation:
+
+floating1 8s infinite ease-in-out;
+
+}
+
+.card:nth-child(even){
+
+animation:
+
+floating2 9s infinite ease-in-out;
+
+}
+
+@keyframes floating1{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-10px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+@keyframes floating2{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(8px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+/*=========================================
+FAQ
+=========================================*/
+
+details{
+
+background:
+
+rgba(255,255,255,.06);
+
+backdrop-filter:blur(22px);
+
+padding:18px 24px;
+
+border-radius:18px;
+
+margin-bottom:18px;
+
+border:
+
+1px solid rgba(255,255,255,.08);
+
+transition:.35s;
+
+overflow:hidden;
+
+}
+
+details:hover{
+
+transform:translateX(8px);
+
+}
+
+summary{
+
+cursor:pointer;
+
+font-size:18px;
+
+font-weight:600;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+}
+
+summary::after{
+
+content:"+";
+
+font-size:28px;
+
+transition:.35s;
+
+}
+
+details[open] summary::after{
+
+transform:rotate(45deg);
+
+}
+
+details p{
+
+margin-top:20px;
+
+opacity:.8;
+
+line-height:1.8;
+
+animation:
+
+fadeAnswer .4s ease;
+
+}
+
+@keyframes fadeAnswer{
+
+from{
+
+opacity:0;
+
+transform:translateY(-15px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:none;
+
+}
+
+}
+
+/*=========================================
+Scroll Reveal
+=========================================*/
+
+.reveal{
+
+opacity:0;
+
+transform:
+
+translateY(90px);
+
+transition:
+
+1s cubic-bezier(.2,.9,.2,1);
+
+}
+
+.reveal.active{
+
+opacity:1;
+
+transform:none;
+
+}
+
+/*=========================================
+Spotlight
+=========================================*/
+
+.spotlight{
+
+position:fixed;
+
+width:350px;
+
+height:350px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(255,255,255,.08),
+
+transparent 70%
+
+);
+
+pointer-events:none;
+
+mix-blend-mode:screen;
+
+transform:
+
+translate(-50%,-50%);
+
+z-index:1;
+
+}
+
+</style>
+
+<div class="spotlight"></div>
+
+<script>
+
+/*=========================================
+Spotlight
+=========================================*/
+
+const spotlight=document.querySelector(".spotlight");
+
+window.addEventListener("mousemove",e=>{
+
+spotlight.style.left=e.clientX+"px";
+
+spotlight.style.top=e.clientY+"px";
+
+});
+
+/*=========================================
+Reveal Animation
+=========================================*/
+
+const observer2=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("active");
+
+}
+
+});
+
+},{
+
+threshold:.15
+
+});
+
+document.querySelectorAll(".glass-panel,.card")
+
+.forEach(el=>{
+
+el.classList.add("reveal");
+
+observer2.observe(el);
+
+});
+
+/*=========================================
+3D Card Tilt
+=========================================*/
+
+document.querySelectorAll(".card")
+
+.forEach(card=>{
+
+card.addEventListener("mousemove",e=>{
+
+const rect=card.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+
+const y=e.clientY-rect.top;
+
+const rotateY=(x-rect.width/2)/12;
+
+const rotateX=(rect.height/2-y)/12;
+
+card.style.transform=
+
+`perspective(1200px)
+
+rotateX(${rotateX}deg)
+
+rotateY(${rotateY}deg)
+
+translateY(-12px)
+
+scale(1.03)`;
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.transform="";
+
+});
+
+});
+
+/*=========================================
+Mouse Glow
+=========================================*/
+
+document.querySelectorAll(".card")
+
+.forEach(card=>{
+
+card.addEventListener("mousemove",e=>{
+
+const rect=card.getBoundingClientRect();
+
+card.style.background=
+
+`radial-gradient(
+
+circle at
+
+${e.clientX-rect.left}px
+
+${e.clientY-rect.top}px,
+
+rgba(255,255,255,.18),
+
+rgba(255,255,255,.05)
+
+60%)`;
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.background="";
+
+});
+
+});
+
+</script>
+
+<!-- ========================================= -->
+<!-- PART 4 - PARTICLES + PRELOADER + EFFECTS -->
+<!-- ========================================= -->
+
+<!-- Loading Screen -->
+
+<div id="preloader">
+
+<div class="loader-circle"></div>
+
+<h2>Study Sphere</h2>
+
+<p>Loading Experience...</p>
+
+</div>
+
+<style>
+
+/*==========================
+Preloader
+===========================*/
+
+#preloader{
+
+position:fixed;
+
+inset:0;
+
+background:#020617;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+z-index:99999999;
+
+transition:1s;
+
+}
+
+.loader-circle{
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+border:5px solid rgba(255,255,255,.15);
+
+border-top:5px solid #00e5ff;
+
+animation:spin 1s linear infinite;
+
+margin-bottom:25px;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/*==========================
+Scrollbar
+===========================*/
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:
+
+linear-gradient(#00e5ff,#2563eb);
+
+border-radius:50px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#07152d;
+
+}
+
+/*==========================
+Selection
+===========================*/
+
+::selection{
+
+background:#00e5ff;
+
+color:black;
+
+}
+
+/*==========================
+Floating Stars
+===========================*/
+
+.star{
+
+position:fixed;
+
+width:2px;
+
+height:2px;
+
+background:white;
+
+border-radius:50%;
+
+opacity:.5;
+
+animation:twinkle 4s infinite;
+
+pointer-events:none;
+
+}
+
+@keyframes twinkle{
+
+50%{
+
+opacity:1;
+
+transform:scale(2);
+
+}
+
+}
+
+/*==========================
+Footer Glow
+===========================*/
+
+.footer-links{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.footer-links::before{
+
+content:"";
+
+position:absolute;
+
+left:-150%;
+
+top:0;
+
+width:250%;
+
+height:100%;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.1),
+
+transparent
+
+);
+
+animation:footerGlow 7s infinite;
+
+}
+
+@keyframes footerGlow{
+
+100%{
+
+left:100%;
+
+}
+
+}
+
+</style>
+
+<script>
+
+/*==========================
+Preloader
+===========================*/
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+
+preloader.style.opacity="0";
+
+preloader.style.pointerEvents="none";
+
+setTimeout(()=>{
+
+preloader.remove();
+
+},1000);
+
+},1200);
+
+});
+
+/*==========================
+Cursor Trail
+===========================*/
+
+const trail=[];
+
+for(let i=0;i<12;i++){
+
+const d=document.createElement("div");
+
+d.style.position="fixed";
+
+d.style.width="8px";
+
+d.style.height="8px";
+
+d.style.borderRadius="50%";
+
+d.style.background="rgba(0,229,255,.4)";
+
+d.style.pointerEvents="none";
+
+d.style.zIndex="9999";
+
+d.style.filter="blur(2px)";
+
+document.body.appendChild(d);
+
+trail.push({
+
+el:d,
+
+x:0,
+
+y:0
+
+});
+
+}
+
+let mx=0,my=0;
+
+window.addEventListener("mousemove",e=>{
+
+mx=e.clientX;
+
+my=e.clientY;
+
+});
+
+function animateTrail(){
+
+let x=mx;
+
+let y=my;
+
+trail.forEach(dot=>{
+
+dot.x+=(x-dot.x)*0.25;
+
+dot.y+=(y-dot.y)*0.25;
+
+dot.el.style.left=dot.x+"px";
+
+dot.el.style.top=dot.y+"px";
+
+x=dot.x;
+
+y=dot.y;
+
+});
+
+requestAnimationFrame(animateTrail);
+
+}
+
+animateTrail();
+
+/*==========================
+Particles
+===========================*/
+
+const canvas=document.getElementById("particles");
+
+const ctx=canvas.getContext("2d");
+
+function resize(){
+
+canvas.width=innerWidth;
+
+canvas.height=innerHeight;
+
+}
+
+resize();
+
+window.addEventListener("resize",resize);
+
+const particles=[];
+
+for(let i=0;i<120;i++){
+
+particles.push({
+
+x:Math.random()*canvas.width,
+
+y:Math.random()*canvas.height,
+
+vx:(Math.random()-.5)*0.5,
+
+vy:(Math.random()-.5)*0.5,
+
+r:Math.random()*2+1
+
+});
+
+}
+
+function render(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+
+p.x+=p.vx;
+
+p.y+=p.vy;
+
+if(p.x<0||p.x>canvas.width)p.vx*=-1;
+
+if(p.y<0||p.y>canvas.height)p.vy*=-1;
+
+ctx.beginPath();
+
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
+ctx.fillStyle="rgba(255,255,255,.45)";
+
+ctx.fill();
+
+});
+
+requestAnimationFrame(render);
+
+}
+
+render();
+
+/*==========================
+Mobile Ripple
+===========================*/
+
+document.addEventListener("touchstart",e=>{
+
+const t=e.touches[0];
+
+const ripple=document.createElement("div");
+
+ripple.style.position="fixed";
+
+ripple.style.left=t.clientX+"px";
+
+ripple.style.top=t.clientY+"px";
+
+ripple.style.width="20px";
+
+ripple.style.height="20px";
+
+ripple.style.borderRadius="50%";
+
+ripple.style.background="rgba(255,255,255,.35)";
+
+ripple.style.transform="translate(-50%,-50%)";
+
+ripple.style.pointerEvents="none";
+
+ripple.style.transition="1s";
+
+document.body.appendChild(ripple);
+
+setTimeout(()=>{
+
+ripple.style.transform=
+
+"translate(-50%,-50%) scale(18)";
+
+ripple.style.opacity="0";
+
+},20);
+
+setTimeout(()=>{
+
+ripple.remove();
+
+},1000);
+
+});
+
+/*==========================
+Parallax Background
+===========================*/
+
+window.addEventListener("mousemove",e=>{
+
+const x=(e.clientX/window.innerWidth-.5)*30;
+
+const y=(e.clientY/window.innerHeight-.5)*30;
+
+document.querySelectorAll(".blob")
+
+.forEach((b,i)=>{
+
+b.style.transform=
+
+`translate(${x*(i+1)*.3}px,
+
+${y*(i+1)*.3}px)`;
+
+});
+
+});
+
+/*==========================
+Create Stars
+===========================*/
+
+for(let i=0;i<80;i++){
+
+const s=document.createElement("div");
+
+s.className="star";
+
+s.style.left=Math.random()*100+"vw";
+
+s.style.top=Math.random()*100+"vh";
+
+s.style.animationDelay=Math.random()*5+"s";
+
+document.body.appendChild(s);
+
+}
+
+/*==========================
+Performance
+===========================*/
+
+if(window.innerWidth<768){
+
+document.querySelectorAll(".blob")
+
+.forEach(el=>{
+
+el.style.display="none";
+
+});
+
+}
+
+/*==========================
+Smooth Fade Between Pages
+===========================*/
+
+document.querySelectorAll("a")
+
+.forEach(link=>{
+
+link.addEventListener("click",e=>{
+
+const href=link.getAttribute("href");
+
+if(href && !href.startsWith("#")){
+
+document.body.style.transition=".4s";
+
+document.body.style.opacity="0";
+
+}
+
+});
+
+});
+
+</script>
+
+<!-- END OF PREMIUM ANIMATION ENGINE -->
+
+
 
